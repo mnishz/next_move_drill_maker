@@ -3,6 +3,7 @@ set -eu
 
 git clone https://github.com/yaneurao/YaneuraOu.git
 cd YaneuraOu/source
+# sudo apt install clang
 make -j
 
 wget https://github.com/Tama4649/Kristallweizen/raw/master/Kristallweizen_kaiV0.4.zip
