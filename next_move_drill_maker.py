@@ -30,11 +30,12 @@ def eval_sfen(sfen):
 
     prev_eval = 0
 
-    for i, sashite in enumerate(sfen_list):
+    for i, move in enumerate(sfen_list):
 
-        curr_sfen += " " + sashite
+        curr_sfen += " " + move
 
-#         if i < 115:
+        # shortcut
+#         if i < 40:
 #             teban *= -1
 #             continue
 
@@ -58,15 +59,15 @@ def eval_sfen(sfen):
             text += "悪手, "
         if abs(curr_eval) > mate_criteria:
             text += "{} 手詰め, ".format(100000 - abs(curr_eval))
-        if abs(prev_eval) > mate_criteria and abs(curr_eval) < mate_criteria: # 先手後手の評価が入れ替わった時の条件が怪しいかも
+        if abs(prev_eval) > mate_criteria and abs(curr_eval) < mate_criteria:  # 先手後手の評価が入れ替わった時の条件が怪しいかも
             text += "詰み逃し, "
 
         if text:
-            print('{}: {} ({})'.format(i + 1, curr_eval, text[:-2]))
+            print("{}: {} ({})".format(i + 1, curr_eval, text[:-2]))
         else:
-            print('{}: {}'.format(i + 1, curr_eval))
 
 #         print(bestmove)
+            print("{}: {}".format(i + 1, curr_eval))
 
         prev_eval = curr_eval
 
