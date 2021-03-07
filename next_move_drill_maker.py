@@ -9,10 +9,14 @@ def eval_sfen(sfen):
     bad_move_diff_criteria = 500
     bad_move_abs_criteria = 3000
     mate_criteria = 99950
+    num_yomisuji = 3
 
     # 相手の応手が期待通りだったときに探索を改善する方法があるようなので、
     # 一つで解析するよりも二つで交互に解析したほうがいいのかもしれない
     usi = ayane.UsiEngine()
+    usi.set_engine_options({
+        "MultiPV": num_yomisuji  # 読み筋の数
+    })
 #     usi.debug_print = True
     usi.connect("YaneuraOu/source/YaneuraOu-by-gcc")
 
@@ -39,6 +43,10 @@ def eval_sfen(sfen):
         usi.usi_go_and_wait_bestmove("time 0 byoyomi " + str(time_to_think_ms))
 
         bestmove = usi.think_result.bestmove
+
+        # 読み筋
+#         for i in range(num_yomisuji):
+#             print(usi.think_result.pvs[i].to_string())
 
         curr_eval = usi.think_result.pvs[0].eval * teban
 
