@@ -1,7 +1,10 @@
 # How to use: $ python3 next_move_drill_maker.py sfen_example
 
 import sys
+import urllib.parse
+
 import Ayane.source.shogi.Ayane as ayane
+import python_shogi.shogi as shogi
 
 def eval_sfen(sfen):
 
@@ -29,6 +32,10 @@ def eval_sfen(sfen):
     teban = -1
 
     prev_eval = 0
+    bestmove = ""
+    last_bestmove = ""
+
+    board = shogi.Board()
 
     for i, move in enumerate(sfen_list):
 
@@ -37,12 +44,14 @@ def eval_sfen(sfen):
         # shortcut
 #         if i < 40:
 #             teban *= -1
+#             board.push_usi(move)
 #             continue
 
         usi.usi_position(curr_sfen)
 
         usi.usi_go_and_wait_bestmove("time 0 byoyomi " + str(time_to_think_ms))
 
+        last_bestmove = bestmove
         bestmove = usi.think_result.bestmove
 
         # 読み筋
@@ -65,9 +74,19 @@ def eval_sfen(sfen):
         if text:
             print("{}: {} ({})".format(i + 1, curr_eval, text[:-2]))
         else:
-
-#         print(bestmove)
             print("{}: {}".format(i + 1, curr_eval))
+
+        if "悪手" in text and teban == -1:  # 先手での悪手のみを pick up
+            url = "https://sfenreader.appspot.com/sfen?turn=off&sfen="
+            url += urllib.parse.quote(board.sfen())
+            last_move = str(board.peek())[2:4]
+            last_move = last_move[0] + str(ord(last_move[1]) - 96)
+            url += "&lm=" + last_move
+            print(url)
+            print("best move is " + last_bestmove)
+#             break
+
+        board.push_usi(move)
 
         prev_eval = curr_eval
 
