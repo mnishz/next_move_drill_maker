@@ -25,10 +25,3 @@ wget https://github.com/yaneurao/YaneuraOu/releases/download/v4.73_book/yaneura_
 unzip yaneura_book1_V101.zip
 wget https://github.com/yaneurao/YaneuraOu/releases/download/v4.73_book/yaneura_book3.zip
 unzip yaneura_book3.zip
-
-########
-# setup libraries
-########
-
-cd $gitroot
-git clone https://github.com/gunyarakun/python-shogi.git python_shogi

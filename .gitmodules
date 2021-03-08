@@ -1,3 +1,6 @@
 [submodule "Ayane"]
 	path = Ayane
 	url = https://github.com/yaneurao/Ayane
+[submodule "python_shogi"]
+	path = python_shogi
+	url = https://github.com/gunyarakun/python-shogi.git
